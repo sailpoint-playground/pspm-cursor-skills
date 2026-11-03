@@ -62,7 +62,7 @@ If no candidate exists, leave Flink emitted and Search ingested blank.
 
 ## Durations
 
-Under every milestone except Submitted, show elapsed time since Submitted in parentheses. Under Search ingested, show elapsed time since Flink emitted instead. That duration is the search log's latency. Keep milliseconds. Do not round to the nearest second, and do not drop seconds once the elapsed time reaches an hour or a day. 1.559 seconds is `1.559s`, not `2s`. 24 hours and 33.046 seconds is `1d 33.046s`, not `1d 0h 0m`. Color it red when elapsed time is over 5 minutes. Use `useHostTheme().category.red` for the red. Do not hardcode a hex.
+Under every milestone except Submitted, show the gap from the previous milestone that has a time. Do not show the total time since Submitted. Skip a blank milestone when choosing the previous one. A step that happened before the previous milestone is negative. Keep milliseconds. Do not round to the nearest second, and do not drop seconds once the elapsed time reaches an hour or a day. 1.559 seconds is `1.559s`, not `2s`. 24 hours and 33.046 seconds is `1d 33.046s`, not `1d 0h 0m`. Color it red when the absolute gap is over 5 minutes. Use `useHostTheme().category.red` for the red. Do not hardcode a hex.
 
 ## Canvas
 
@@ -76,6 +76,6 @@ Keep the table in its normal frame. Do not widen the canvas to fit the columns.
 
 Blank milestone cells are an em dash. Row tone warning when Search ingested is blank.
 
-Caption: org, pod if one pod dominates, UTC, last 30 days, and that the parenthetical is time since submit except under Search ingested, where it is time since Flink emitted. Call out rows with no search ingest and any connection time that came from aer.
+Caption: org, pod if one pod dominates, UTC, last 30 days, and that the parenthetical is the gap from the previous milestone, not the time since submit. Call out rows with no search ingest and any connection time that came from aer.
 
 In chat, give the canvas link, the request count, and the rows still missing a search time. Do not repeat the full table.
