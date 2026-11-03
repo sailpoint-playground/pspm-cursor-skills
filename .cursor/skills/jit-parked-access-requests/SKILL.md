@@ -68,7 +68,11 @@ Under every milestone except Submitted, show elapsed time since Submitted in par
 
 One row per request, oldest submit first. Headers are two lines: milestone name, then the system name from the table above.
 
-Columns: Request, Action, Entitlement, Submitted, JIT policy, SOD passed, Approved, Connection published, Request completed, Flink emitted, Search ingested.
+Columns: Request, Action, Entitlement, Connection id, Submitted, JIT policy, SOD passed, Approved, Connection published, Request completed, Flink emitted, Search ingested.
+
+Connection id shows the dashed form and, under it, the plain form used in search logs.
+
+Render the table with `framed={false}` and `width: max-content` so the canvas is as wide as the columns. Do not leave the table in its own horizontal scroll frame.
 
 Blank milestone cells are an em dash. Row tone warning when Search ingested is blank.
 
