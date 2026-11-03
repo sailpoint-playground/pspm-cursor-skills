@@ -45,6 +45,7 @@ Times are the log `@timestamp`. A missing line stays blank. Do not invent a time
 | Approved | wps | `Successfully submitted the approval decisions` if present, otherwise `Approval complete for identityRequestId`. |
 | Connection published | gov-ent-connections | Earliest `connectionId=` on `BaseConnectionEventPublisher` or `ConnectionEventProcessor`. If that line is absent, use aer `AuditEventService` `connectionId=`. Say so on that row. |
 | Request completed | wps | `Publishing ACCESS_REQUEST_COMPLETED`. If that line is absent, use the wps `AccessRequestProcessed` audit and say so. |
+| Flink emitted | flink | Search ingested minus that same line's `latency`. Blank when Search ingested is blank. |
 | Search ingested | sp-search-ciem-ingest | Defined below. |
 
 Normalize connection ids by removing dashes. Search logs use the undashed id.
@@ -55,9 +56,9 @@ Search `stack:sp-search-ciem-ingest` for the undashed connection id. Grant match
 
 The same connection id is reused by later grants and revokes. Do not take the first search log after the publish.
 
-Record time = search `@timestamp` minus that line's `latency`. Keep candidates whose record time is at or after the connection publish (allow 2 seconds of clock skew). The end time is the `@timestamp` of the candidate with the earliest record time. Show that log's latency only if asked. A record created before the publish must not be used. That is what makes ingest lag longer than the request.
+Record time = search `@timestamp` minus that line's `latency`. That record time is the Flink emitted column. Keep candidates whose record time is at or after the connection publish (allow 2 seconds of clock skew). Search ingested is the `@timestamp` of the candidate with the earliest record time. A record created before the publish must not be used. That is what makes ingest lag longer than the request.
 
-If no candidate exists, leave Search ingested blank.
+If no candidate exists, leave Flink emitted and Search ingested blank.
 
 ## Durations
 
@@ -67,7 +68,7 @@ Under every milestone except Submitted, show elapsed time since Submitted in par
 
 One row per request, oldest submit first. Headers are two lines: milestone name, then the system name from the table above.
 
-Columns: Request, Action, Entitlement, Submitted, JIT policy, SOD passed, Approved, Connection published, Request completed, Search ingested.
+Columns: Request, Action, Entitlement, Submitted, JIT policy, SOD passed, Approved, Connection published, Request completed, Flink emitted, Search ingested.
 
 Blank milestone cells are an em dash. Row tone warning when Search ingested is blank.
 
