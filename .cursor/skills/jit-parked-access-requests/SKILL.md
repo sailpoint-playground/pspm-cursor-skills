@@ -72,7 +72,7 @@ Columns: Request, Action, Entitlement, Connection id, Submitted, JIT policy, SOD
 
 Connection id shows the dashed form and, under it, the plain form used in search logs.
 
-Render the table with `framed={false}` and `width: max-content` so the canvas is as wide as the columns. Do not leave the table in its own horizontal scroll frame.
+Keep the table in its normal frame. Do not widen the canvas to fit the columns.
 
 Blank milestone cells are an em dash. Row tone warning when Search ingested is blank.
 
